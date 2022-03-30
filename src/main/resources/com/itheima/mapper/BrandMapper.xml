@@ -32,7 +32,8 @@
         <result property="companyName" column="company_name"/>
     </resultMap>
     <select id="selectAll" resultMap="brandResultMap">
-        select * from tb_brand;
+        select *
+        from tb_brand;
     </select>
 
     <!--
@@ -50,7 +51,27 @@
     -->
     <select id="selectById" resultMap="brandResultMap">
         select *
-        from tb_brand where id = #{id};
+        from tb_brand
+        where id = #{id};
+    </select>
+
+    <!--条件查询-->
+    <select id="selectByCondition" resultMap="brandResultMap">
+        select *
+        from tb_brand
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+
+            <if test="companyName != null and companyName != '' ">
+                and company_name like #{companyName}
+            </if>
+
+            <if test="brandName != null and brandName != '' ">
+                and company_name like #{brandName}
+            </if>
+        </where>
     </select>
 
 </mapper>
